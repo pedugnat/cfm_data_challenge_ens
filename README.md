@@ -39,3 +39,23 @@ Each row also comprises a description of the ten last trades (ordered from the m
 
 # Approach 
 The approach I took in this challenge is rather classic. It consists in a in-depth feature engineering followed by a well-tuned XGBoost trained using GPUs.
+
+## Preprocessing
+Not a lot of preprocessing was needed since the data was rather clean. 
+* I removed the stocks that were not in the test set
+* I renamed columns from tuple to string to ease manipulation
+* There were a few nans in the OB price. It means that no price is proposed at that point in time. To remove them, I replaced the price with a price very far from the mid. This was especially useful to make new features and avoid "propagating" nans
+* Normalizing trade time w.r.t. the last trade in the list, so that trade times are comparable across samples
+* Normalize last update of the orders books, to make them comparable
+
+## Feature engineering
+Feature engineering was the main part of the challenge. In order to predict where the next trade would go, I used a series of different features : 
+### Features on last 10 trades
+* Count the frequency of each venue among the last 3, 5 and 10 trades. This is quite an intuitive feature : if a venue was much used before, it will probably continue after. 
+* Count the frequency of each venue among the trades that happened in the last 0.1, 1 and 10 seconds. This allow to capture only near trades, which makes them more relevant. 
+### Features on order book size, price and update
+* Compute the total book size for bid and ask and for both levels
+* Rank OB by proposed price (one of the most powerful features). It allows to create a "stationary" feature that does not depend on the context/time of the day, to describe how attractive this order book is likely to be w.r.t others.
+* 
+
+
