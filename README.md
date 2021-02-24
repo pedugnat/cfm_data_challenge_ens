@@ -16,13 +16,13 @@ An order book lists the quantities of an asset that are currently on offer by se
 
 Each of the six books is described as follows:
 
-* The `bid` column (respectively 'ask') represents the difference between the best bid (respectively best ask) and the aggregate mid-price, expressed in some fixed currency unit.
+* The `bid` column (resp. 'ask') represents the difference between the best bid (resp. best ask) and the aggregate mid-price, expressed in some fixed currency unit.
 
-* The `bid1` column (respectively 'ask1') represents the difference between the second best bid (respectively second best ask) and the aggregate mid-price, expressed in some fixed currency unit.
+* The `bid1` column (resp. 'ask1') represents the difference between the second best bid (resp. second best ask) and the aggregate mid-price.
 
-* The `bid_size` column (respectively 'ask_size') represents the total number of stocks available at the best bid (respectively best ask) divided by the aggregate volume.
+* The `bid_size` column (resp. 'ask_size') represents the total number of stocks available at the best bid (resp. best ask) divided by the aggregate volume.
 
-* The `bid_size1` column (respectively 'ask_size1') represents the total number of stocks available at the second best bid (respectively at the second best ask) divided by the aggregate volume.
+* The `bid_size1` column (resp. 'ask_size1') represents the total number of stocks available at the second best bid (resp. at the second best ask) divided by the aggregate volume.
 
 The 'ts_last_update' column corresponds to the timestamp, given as a number of microseconds since midnight (local time), of the last update of the book.
 
@@ -50,12 +50,22 @@ Not a lot of preprocessing was needed since the data was rather clean.
 
 ## Feature engineering
 Feature engineering was the main part of the challenge. In order to predict where the next trade would go, I used a series of different features : 
+
 ### Features on last 10 trades
 * Count the frequency of each venue among the last 3, 5 and 10 trades. This is quite an intuitive feature : if a venue was much used before, it will probably continue after. 
 * Count the frequency of each venue among the trades that happened in the last 0.1, 1 and 10 seconds. This allow to capture only near trades, which makes them more relevant. 
+* Descriptive features on those trades : mean, std, min max of price and quantity, number of trades on ask, std of the times of the trades (not very useful)
+* Stats on the biggest and best price trade among 10 last (not very useful)
+* 
 ### Features on order book size, price and update
 * Compute the total book size for bid and ask and for both levels
-* Rank OB by proposed price (one of the most powerful features). It allows to create a "stationary" feature that does not depend on the context/time of the day, to describe how attractive this order book is likely to be w.r.t others.
-* 
+* Rank OB by proposed price for both levels of the book (one of the most powerful features). It allows to create a "stationary" feature that does not depend on the context/time of the day, to describe how attractive this order book is likely to be w.r.t others.
+* Prices of both level versus best price available on 6 venues (some kind of normalization/ratio that allow features to be comparable)  
+* Some weighted quantity-price index
+* Ratio between the size / price of the first and second level to measure the gap between them
 
+### Target/Frequency encoding (may have caused severe problems on the private set)
+* Encode each stock / day / time of the day by the frequence of the trades on each venue on the train data (ie groubpy stock or day or time of the day and compute the frequency for each venue) and use it as a feature. It adds 6 columns per feature encoded. 
+
+## Training
 
