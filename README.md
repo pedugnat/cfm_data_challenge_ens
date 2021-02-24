@@ -49,7 +49,7 @@ Not a lot of preprocessing was needed since the data was rather clean.
 * Normalize last update of the orders books, to make them comparable
 
 ## Feature engineering
-Feature engineering was the main part of the challenge. In order to predict where the next trade would go, I used a series of different features : 
+Feature engineering was the main part of the challenge. In order to predict where the next trade would go, I used a series of roughly **260 different features** : 
 
 ### Features on last 10 trades
 * Count the frequency of each venue among the last 3, 5 and 10 trades. This is quite an intuitive feature : if a venue was much used before, it will probably continue after. 
@@ -68,4 +68,15 @@ Feature engineering was the main part of the challenge. In order to predict wher
 * Encode each stock / day / time of the day by the frequence of the trades on each venue on the train data (ie groubpy stock or day or time of the day and compute the frequency for each venue) and use it as a feature. It adds 6 columns per feature encoded. 
 
 ## Training
+The training procedure was rather standard
+* Cross-validation : 5-Folds (using sklearn implementation)
+* Memory reduction trick to allow all ~260 features to fit in 16Go of RAM
+* Model : XGBoostRegressor (from xgboost package) with following parameters : 
+** using GPU (~45 min)
+** 0.05 learning rate
+** 8 max depth
+** 0.6 columns subsampling (nice boost)
+** 4 min_child_weight
 
+## Final Score
+Validation score was **0.5130**, which translated in **0.5040** on the public LB (4th) and, for some strange reason, in **0.2610** on the public LB. This difference is quite difficult to understand, because even by overfitting "voluntarily" I couldn't get such a modification (and 0.2610 is way behind the naive baseline that consists in predicting always the last venue). Moreover, the public-private score was quite stable for all other candidates. 
