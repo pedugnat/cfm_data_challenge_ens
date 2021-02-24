@@ -25,7 +25,7 @@ Feature engineering was the main part of the challenge. In order to predict wher
 * Count the frequency of each venue among the trades that happened in the last 0.1, 1 and 10 seconds. This allow to capture only near trades, which makes them more relevant. 
 * Descriptive features on those trades : mean, std, min max of price and quantity, number of trades on ask, std of the times of the trades (not very useful)
 * Stats on the biggest and best price trade among 10 last (not very useful)
-* 
+
 ### Features on order book size, price and update
 * Compute the total book size for bid and ask and for both levels
 * Rank OB by proposed price for both levels of the book (one of the most powerful features). It allows to create a "stationary" feature that does not depend on the context/time of the day, to describe how attractive this order book is w.r.t others.
@@ -41,11 +41,11 @@ The training procedure was rather standard
 * Cross-validation : 5-Folds (using sklearn implementation)
 * Memory reduction trick to allow all ~260 features to fit in 16Go of RAM
 * Model : XGBoostRegressor (from xgboost package) with following parameters : 
-** using GPU (~45 min)
-** 0.05 learning rate
-** 8 max depth
-** 0.6 columns subsampling (nice boost)
-** 4 min_child_weight
+  * using GPU (~45 min)
+  * 0.05 learning rate
+  * 8 max depth
+  * 0.6 columns subsampling (nice boost)
+  * 4 min_child_weight
 
 ## Final Score
 Validation score was **0.5130**, which translated in **0.5040** on the public LB (4th) and, for some strange reason, in **0.2610** on the public LB. This difference is quite difficult to understand, because even by overfitting "voluntarily" I couldn't get such a modification (and 0.2610 is way behind the naive baseline that consists in predicting always the last venue). Moreover, the public-private score was quite stable for all other candidates. 
