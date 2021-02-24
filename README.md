@@ -1,5 +1,5 @@
 # cfm_data_challenge_ens
-*Where will the next trade take place?*
+*Where will the next trade take place?* : https://challengedata.ens.fr/participants/challenges/40/
 
 # Context of the challenge
 Most financial markets use an electronic trading mechanism called a limit order book to facilitate the trading of assets (stocks, futures, options, etc.). Participants submit (or cancel) orders to this electronic order book. These orders are requests to buy or sell a given quantity of an asset at a specified price, thus allowing buyers to be matched with sellers at a mutually agreed price. Since an asset can be traded on multiple trading venues, participants can choose to which venue they send an order. For instance, a US stock can be traded on various exchanges, such as NYSE, NASDAQ, Direct Edge or BATS. When sending an order, participants generally select the best available trading venue at that time. Their decisions may include a statistical analysis of past venue activity.
