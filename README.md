@@ -59,16 +59,16 @@ An order book lists the quantities of an asset that are currently on offer by se
 
 Each of the six books is described as follows:
 
-* The `bid` column (resp. 'ask') represents the difference between the best bid (resp. best ask) and the aggregate mid-price, expressed in some fixed currency unit. The `bid1` column (resp. 'ask1') represents the difference between the second best bid (resp. second best ask) and the aggregate mid-price
+* The `bid` column (resp. 'ask') represents the difference between the best bid (resp. best ask) and the aggregate mid-price, expressed in some fixed currency unit. The `bid1` column (resp. 'ask1') represents the difference between the second best bid (resp. second best ask) and the aggregate mid-price,
 
-* The `bid_size` column (resp. 'ask_size') represents the total number of stocks available at the best bid (resp. best ask) divided by the aggregate volume. The `bid_size1` column (resp. 'ask_size1') represents the total number of stocks available at the second best bid (resp. at the second best ask) divided by the aggregate volume
+* The `bid_size` column (resp. 'ask_size') represents the total number of stocks available at the best bid (resp. best ask) divided by the aggregate volume. The `bid_size1` column (resp. 'ask_size1') represents the total number of stocks available at the second best bid (resp. at the second best ask) divided by the aggregate volume,
 
-* The 'ts_last_update' column corresponds to the timestamp of the last update of the book
+* The 'ts_last_update' column corresponds to the timestamp of the last update of the book.
 
 ## Trades
 Each row also comprises a description of the ten last trades for the corresponding asset. A trade represents a transaction of a certain quantity of an asset at a given price between a buyer and a seller. The ten trades from the history of trades are given are described as follows:
 
-* Its quantity (`qty`): the number of stocks traded, divided by the aggregate volume
-* Its timestamp (`tod`): when the trade was executed
-* Its price (`price`), representing the difference between the trade price with the aggregate mid-price
-* Its source (`source_id`) representing the trading venue on which this particular trade was executed
+* Its quantity (`qty`): the number of stocks traded, divided by the aggregate volume,
+* Its timestamp (`tod`): when the trade was executed,
+* Its price (`price`), representing the difference between the trade price with the aggregate mid-price,
+* Its source (`source_id`) representing the trading venue on which this particular trade was executed.
